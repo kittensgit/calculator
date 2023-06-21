@@ -3,6 +3,7 @@ import Wrapper from './Components/Wrapper';
 import Screen from './Components/Screen';
 import ButtonBox from './Components/ButtonBox';
 import Button from './Components/Button';
+import CalcProvider from './Context/CalcContext';
 
 const btnValues = [
   ['C', '+-', '%', '/'],
@@ -14,7 +15,7 @@ const btnValues = [
 
 function App() {
   return (
-    <div>
+    <CalcProvider>
       <Wrapper>
         <Screen />   {/* тут будут цыферки писаться */}
         <ButtonBox>
@@ -26,7 +27,7 @@ function App() {
           ))} {/* flat()  из подмассивов делает единый массив*/}
         </ButtonBox>
       </Wrapper>
-    </div>
+    </CalcProvider>
   );
 }
 
