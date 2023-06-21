@@ -5,8 +5,8 @@ export const CalcContext = createContext()
 const CalcProvider = ({ children }) => {
 
     const [calc, setCalc] = useState({
-        sign: '',  //знак
-        nimber: 0,
+        sign: '', 
+        num: 0,
         res: 0
     })
 
