@@ -83,7 +83,20 @@ const Button = ({ value }) => { //принимаем тот или инорй с
 
         //user click persen
         const persenClick = () => {
+            setCalc({
+                num: (calc.num / 100),
+                res: (calc.res / 100),
+                sign: ''
+            })
+        }
 
+        //user click invert button
+        const invertClick = () => {
+            setCalc({
+                num: calc.num ? calc.num * -1 : 0,
+                res: calc.res ? calc.res * -1 : 0,
+                sign: ''
+            })
         }
 
         const results = {
@@ -94,7 +107,8 @@ const Button = ({ value }) => { //принимаем тот или инорй с
             '+': signClick,
             'x': signClick,
             '=': equalsClick,
-            '%': persenClick
+            '%': persenClick,
+            '+-': invertClick
         }
         if (results[value]) {
             return results[value]() // Здесь проверяется наличие функции в объекте results с ключом value
