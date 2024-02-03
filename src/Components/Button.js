@@ -1,31 +1,32 @@
-import React, { useContext } from 'react'
-import { CalcContext } from '../Context/CalcContext'
+import React, { useContext } from 'react';
+
+import { CalcContext } from '../Context/CalcContext';
 
 const getStyleName = (btn) => {
     const className = {
         '=': 'equals',
-        'x': 'opt',
+        x: 'opt',
         '-': 'opt',
         '+': 'opt',
-        '/': 'opt'
-    }
-    return className[btn] // className яв-ся объектом, а btn является переменной или значением, используемым в качестве ключа
-}
+        '/': 'opt',
+    };
+    return className[btn]; // className яв-ся объектом, а btn является переменной или значением, используемым в качестве ключа
+};
 
-const Button = ({ value }) => { //принимаем тот или инорй с символ нажатый пользовотелем
+const Button = ({ value }) => {
+    //принимаем тот или инорй с символ нажатый пользовотелем
 
-    const { calc, setCalc } = useContext(CalcContext)
+    const { calc, setCalc } = useContext(CalcContext);
 
     const handleBtnClick = () => {
-
         //user click operation
         const signClick = () => {
             setCalc({
                 sign: value,
                 res: !calc.res && calc.num ? calc.num : calc.res,
-                num: 0
-            })
-        }
+                num: 0,
+            });
+        };
 
         //user click equals
         const equalsClick = () => {
@@ -36,90 +37,100 @@ const Button = ({ value }) => { //принимаем тот или инорй с
                         '-': (a, b) => a - b,
                         '*': (a, b) => a * b,
                         '/': (a, b) => a / b,
-                    }
-                    return result[sign](a, b)
-                }
+                    };
+                    return result[sign](a, b);
+                };
 
                 setCalc({
                     res: math(calc.res, calc.num, calc.sign),
                     sign: '',
-                    num: 0
-                })
+                    num: 0,
+                });
             }
-        }
+        };
 
         // user click comma
         const commaClick = () => {
             setCalc({
                 ...calc,
-                num: !calc.num.toString().includes('.') ? calc.num + value : calc.num
-            })
-        }
+                num: !calc.num.toString().includes('.')
+                    ? calc.num + value
+                    : calc.num,
+            });
+        };
 
         //user click C
         const resetClick = () => {
             setCalc({
-                sign: '', num: 0, res: 0
-            })
-        }
+                sign: '',
+                num: 0,
+                res: 0,
+            });
+        };
 
         //user click number
         const handleClickButton = () => {
-            const numberString = value.toString()
+            const numberString = value.toString();
 
             let numberValue;
 
             if (numberString === '0' && calc.num === 0) {
-                numberValue = '0'
+                numberValue = '0';
             } else {
-                numberValue = Number(calc.num + numberString)
+                numberValue = Number(calc.num + numberString);
             }
 
             setCalc({
                 ...calc,
-                num: numberValue
-            })
-        }
+                num: numberValue,
+            });
+        };
 
         //user click persen
         const persenClick = () => {
             setCalc({
-                num: (calc.num / 100),
-                res: (calc.res / 100),
-                sign: ''
-            })
-        }
+                num: calc.num / 100,
+                res: calc.res / 100,
+                sign: '',
+            });
+        };
 
         //user click invert button
         const invertClick = () => {
             setCalc({
                 num: calc.num ? calc.num * -1 : 0,
                 res: calc.res ? calc.res * -1 : 0,
-                sign: ''
-            })
-        }
+                sign: '',
+            });
+        };
 
         const results = {
             '.': commaClick,
-            'C': resetClick,
+            C: resetClick,
             '/': signClick,
             '-': signClick,
             '+': signClick,
-            'x': signClick,
+            x: signClick,
             '=': equalsClick,
             '%': persenClick,
-            '+-': invertClick
-        }
+            '+-': invertClick,
+        };
         if (results[value]) {
-            return results[value]() // Здесь проверяется наличие функции в объекте results с ключом value
+            return results[value](); // Здесь проверяется наличие функции в объекте results с ключом value
         } else {
-            return handleClickButton()
+            return handleClickButton();
         }
-    }
+    };
 
     return (
-        <button onClick={handleBtnClick} className={`${getStyleName(value)} button`}> {value} </button>
-    )
-}
+        <button
+            onClick={handleBtnClick}
+            className={`${getStyleName(value)} button`}
+        >
+            {' '}
+            {value}{' '}
+        </button>
+    );
+};
 
-export default Button
+export default Button;
